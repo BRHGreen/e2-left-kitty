@@ -13,6 +13,8 @@
     "@babel/preset-react": "7.0.0",
     "babel-loader": "8.0.2",
     "css-loader": "^1.0.1",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
@@ -23,10 +25,22 @@
   "dependencies": {
     "apollo-boost": "^0.1.22",
     "graphql": "^14.0.2",
+    "prettier": "^1.15.2",
     "react": "16.5.2",
     "react-apollo": "^2.3.1",
     "react-dom": "16.5.2",
     "react-hot-loader": "4.3.11",
     "spectre.css": "^0.5.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

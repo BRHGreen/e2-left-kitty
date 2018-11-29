@@ -17,12 +17,11 @@ export default () => (
       if (error) return <p>Error :(</p>;
       return (
         <div>
-          {console.log('data', data)}
-          {
-            data.allHousemates.map((housemate, i) => (
-              <p key={i}>{`Username: ${housemate.username}`}</p>
-          ))
-          }
+          {console.log("data", data)}
+          {data.allHousemates.map((housemate, i) => (
+            <p key={i}>{`Username: ${housemate.username}`}</p>
+          ))}
+          {() => console.log("hello")}
         </div>
       );
     }}
