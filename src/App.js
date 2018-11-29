@@ -3,7 +3,6 @@ import { hot } from "react-hot-loader";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import Person from './Person'
-import "./App.scss";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"
