@@ -2,6 +2,11 @@ import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
+const obj = {
+  one: "one",
+  two: "two"
+};
+
 export default () => (
   <Query
     query={gql`
@@ -21,7 +26,6 @@ export default () => (
           {data.allHousemates.map((housemate, i) => (
             <p key={i}>{`Username: ${housemate.username}`}</p>
           ))}
-          {() => console.log("hello")}
         </div>
       );
     }}
