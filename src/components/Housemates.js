@@ -2,7 +2,7 @@ import React from "react";
 import { compose, graphql } from "react-apollo";
 import gql from "graphql-tag";
 
-const Person = ({ getHousemates: { allHousemates, loading, error } }) => {
+const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   return (
@@ -25,4 +25,4 @@ export default compose(
     `,
     { name: "getHousemates" }
   )
-)(Person);
+)(Housemates);

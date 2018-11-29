@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Suspense, lazy } from "react";
 import { hot } from "react-hot-loader";
 import { ApolloProvider } from "react-apollo";
 import ApolloClient from "apollo-boost";
-import Person from './Person'
+import Kitty from "./components/Kitty";
+import Housemates from "./components/Housemates";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql"
@@ -11,12 +12,13 @@ const client = new ApolloClient({
 class App extends Component {
   render() {
     return (
-    <ApolloProvider client={client}>
-      <div className="App">
-        <h1> Ahoy, World! </h1>
-          <Person />
-      </div>
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        <div className="App">
+          <h1> Ahoy, World! </h1>
+          {/* <Housemates /> */}
+          <Kitty />
+        </div>
+      </ApolloProvider>
     );
   }
 }
