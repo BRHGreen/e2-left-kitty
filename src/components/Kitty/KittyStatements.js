@@ -34,20 +34,18 @@ class KittyStatements extends React.Component {
   };
 
   render() {
-    const {
-      getAllKittyStatements,
-      getKittyStatementsByMonth,
-      loading
-    } = this.props;
+    const { getKittyStatementsByMonth, loading, error } = this.props;
 
-    const keys =
+    const columnNames =
       !getKittyStatementsByMonth.loading &&
       getKittyStatementsByMonth.getKittyStatementsByMonth.length > 0 &&
       Object.keys(
         getKittyStatementsByMonth.getKittyStatementsByMonth[0]
       ).filter(key => !key.includes("__"));
 
-    return loading || getKittyStatementsByMonth.loading ? null : (
+    if (loading || getKittyStatementsByMonth.loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+    return (
       <div className="page-content">
         <Dropdown
           menuItems={this.getDropdownItems()}
@@ -57,20 +55,23 @@ class KittyStatements extends React.Component {
         <table className="table table-striped table-hover">
           <thead>
             <tr>
-              {keys && keys.map((heading, i) => <th key={i}>{heading}</th>)}
+              {columnNames &&
+                columnNames.map((heading, i) => <th key={i}>{heading}</th>)}
             </tr>
           </thead>
           <tbody>
             {!getKittyStatementsByMonth.loading &&
               getKittyStatementsByMonth.getKittyStatementsByMonth.map(
                 (row, i) =>
-                  keys && (
+                  columnNames && (
                     <tr key={i}>
-                      {keys.map((_, i) => (
+                      {columnNames.map((_, i) => (
                         <td key={i}>
-                          {keys[i] === "date"
-                            ? moment(parseInt(row[keys[i]])).format("DD/MM/YY")
-                            : row[keys[i]]}
+                          {columnNames[i] === "date"
+                            ? moment(parseInt(row[columnNames[i]])).format(
+                                "DD/MM/YY"
+                              )
+                            : row[columnNames[i]]}
                         </td>
                       ))}
                     </tr>
