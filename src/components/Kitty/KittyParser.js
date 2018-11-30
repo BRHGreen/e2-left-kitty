@@ -51,13 +51,20 @@ class KittyParser extends React.Component {
 
   render() {
     return (
-      <div className="page__container">
-        <textarea
-          style={{ height: "500px", width: "500px" }}
-          onChange={e => this.onChangeHandler(e)}
-        />
-        <br />
-        <button onClick={() => this.parseCsv()}>Parse</button>
+      <div className="page-content">
+        <div className="form-group">
+          <label className="form-label" htmlFor="input-example-3">
+            Paste CSV content here...
+          </label>
+          <textarea
+            className="form-input max-width-md min-height-md"
+            onChange={e => this.onChangeHandler(e)}
+            placeholder="eg: 03/04/2018,B GREEN,BEN S STANDING ORD,FASTER PAYMENT,10.00,31.02"
+          />
+          <button className="btn mt-2" onClick={() => this.parseCsv()}>
+            Parse
+          </button>
+        </div>
       </div>
     );
   }

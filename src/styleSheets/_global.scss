@@ -1,0 +1,13 @@
+@import "./variables";
+
+.page-content {
+  padding: $spacing-lg;
+}
+
+.max-width-md {
+  max-width: 500px;
+}
+
+.min-height-md {
+  min-height: 500px;
+}
