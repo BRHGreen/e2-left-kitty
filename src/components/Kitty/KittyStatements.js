@@ -1,9 +1,14 @@
 import React from "react";
 import moment from "moment";
 import { compose, graphql } from "react-apollo";
-import getAllKittyStatements from "./graphql/getAllKittyStatements";
-import getKittyStatementsByMonth from "./graphql/getKittyStatementsByMonth";
-import allHousemates from "./graphql/allHousemates";
+import {
+  getKittyStatementsByMonth,
+  getAllKittyStatements
+} from "./graphql/kittyStatements";
+import {
+  allHousemates,
+  assignHousemateToStatement
+} from "./graphql/housemates";
 
 import Dropdown from "../Common/Dropdown";
 
@@ -44,13 +49,13 @@ class KittyStatements extends React.Component {
       month: monthSelected
     });
   };
-  assignHousemate = housemate => {
-    this.setState({ housemate });
-    console.log(">>>>", housemate);
-    // console.log("housemate", housemate);
-    // this.props.getKittyStatementsByMonth({
-    //   housemate
-    // });
+  assignHousemate = (housemate, kittyId) => {
+    this.props.assignHousemateToStatement({
+      variables: {
+        newOwner: housemate.id,
+        kittyId
+      }
+    });
   };
 
   render() {
@@ -102,12 +107,12 @@ class KittyStatements extends React.Component {
                         }
                         if (columnNames[i] === "owner") {
                           return (
-                            <td>
+                            <td key={i}>
                               <Dropdown
                                 menuItems={this.getDropdownItems.housemates()}
                                 displayValue={"firstName"}
                                 onClick={housemate =>
-                                  this.assignHousemate(housemate)
+                                  this.assignHousemate(housemate, row.id)
                                 }
                                 header="Select Housemate"
                               />
@@ -136,6 +141,8 @@ export default compose(
   }),
   graphql(allHousemates, {
     name: "allHousemates"
-    // options: { variables: { month: "02/2018" } }
+  }),
+  graphql(assignHousemateToStatement, {
+    name: "assignHousemateToStatement"
   })
 )(KittyStatements);
