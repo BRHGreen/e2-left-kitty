@@ -1,11 +1,20 @@
 import React from "react";
 import { compose, graphql } from "react-apollo";
+import moment from "moment";
 import gql from "graphql-tag";
 
 const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
   const columnNames =
     !loading &&
     Object.keys(allHousemates[0]).filter(key => !key.includes("__"));
+
+  const formatDate = date => {
+    console.log("date", date);
+    if (date === null) {
+      return "-";
+    }
+    return moment(parseInt(date)).format("MM/YYYY");
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -19,13 +28,17 @@ const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
           </tr>
         </thead>
         <tbody>
-          {console.log(allHousemates)}
           {allHousemates.map(
             (row, i) =>
               columnNames && (
                 <tr key={i}>
-                  {console.log(row[columnNames[i]])}
                   {columnNames.map((_, i) => {
+                    if (
+                      columnNames[i] === "contributingFrom" ||
+                      columnNames[i] === "contributingTo"
+                    ) {
+                      return <td key={i}>{formatDate(row[columnNames[i]])}</td>;
+                    }
                     if (typeof row[columnNames[i]] !== "string") {
                       return <td key={i}>{row[columnNames[i]].toString()}</td>;
                     }
@@ -48,6 +61,8 @@ export default compose(
           firstName
           lastName
           isCurrentHousemate
+          contributingFrom
+          contributingTo
         }
       }
     `,

@@ -3,27 +3,39 @@ import moment from "moment";
 import { compose, graphql } from "react-apollo";
 import getAllKittyStatements from "./graphql/getAllKittyStatements";
 import getKittyStatementsByMonth from "./graphql/getKittyStatementsByMonth";
+import allHousemates from "./graphql/allHousemates";
 
 import Dropdown from "../Common/Dropdown";
 
 class KittyStatements extends React.Component {
   state = {
     monthSelected: null,
+    housemate: null,
     isOpen: false
   };
-  getDropdownItems = () => {
-    const { getAllKittyStatements } = this.props;
-    const availableMonths = [];
-    if (!getAllKittyStatements.loading) {
-      getAllKittyStatements.getAllKittyStatements.map(statement => {
-        if (!availableMonths.includes(statement.month)) {
-          availableMonths.push(statement.month);
-        }
-        return null;
-      });
-      return availableMonths;
+
+  getDropdownItems = {
+    dates: () => {
+      const { getAllKittyStatements } = this.props;
+      const availableMonths = [];
+      if (!getAllKittyStatements.loading) {
+        getAllKittyStatements.getAllKittyStatements.map(statement => {
+          if (!availableMonths.includes(statement.month)) {
+            availableMonths.push(statement.month);
+          }
+          return null;
+        });
+        return availableMonths;
+      }
+      return null;
+    },
+    housemates: () => {
+      const { allHousemates } = this.props;
+      if (!allHousemates.loading) {
+        return allHousemates.allHousemates.map(housemate => housemate);
+      }
+      return null;
     }
-    return null;
   };
 
   filterState = monthSelected => {
@@ -32,9 +44,22 @@ class KittyStatements extends React.Component {
       month: monthSelected
     });
   };
+  assignHousemate = housemate => {
+    this.setState({ housemate });
+    console.log(">>>>", housemate);
+    // console.log("housemate", housemate);
+    // this.props.getKittyStatementsByMonth({
+    //   housemate
+    // });
+  };
 
   render() {
-    const { getKittyStatementsByMonth, loading, error } = this.props;
+    const {
+      getKittyStatementsByMonth,
+      allHousemates,
+      loading,
+      error
+    } = this.props;
 
     const columnNames =
       !getKittyStatementsByMonth.loading &&
@@ -48,7 +73,7 @@ class KittyStatements extends React.Component {
     return (
       <div className="page-content">
         <Dropdown
-          menuItems={this.getDropdownItems()}
+          menuItems={this.getDropdownItems.dates()}
           onClick={monthSelected => this.filterState(monthSelected)}
           header="Select Month"
         />
@@ -65,15 +90,32 @@ class KittyStatements extends React.Component {
                 (row, i) =>
                   columnNames && (
                     <tr key={i}>
-                      {columnNames.map((_, i) => (
-                        <td key={i}>
-                          {columnNames[i] === "date"
-                            ? moment(parseInt(row[columnNames[i]])).format(
+                      {columnNames.map((_, i) => {
+                        if (columnNames[i] === "date") {
+                          return (
+                            <td key={i}>
+                              {moment(parseInt(row[columnNames[i]])).format(
                                 "DD/MM/YY"
-                              )
-                            : row[columnNames[i]]}
-                        </td>
-                      ))}
+                              )}
+                            </td>
+                          );
+                        }
+                        if (columnNames[i] === "owner") {
+                          return (
+                            <td>
+                              <Dropdown
+                                menuItems={this.getDropdownItems.housemates()}
+                                displayValue={"firstName"}
+                                onClick={housemate =>
+                                  this.assignHousemate(housemate)
+                                }
+                                header="Select Housemate"
+                              />
+                            </td>
+                          );
+                        }
+                        return <td key={i}>{row[columnNames[i]]}</td>;
+                      })}
                     </tr>
                   )
               )}
@@ -91,5 +133,9 @@ export default compose(
   graphql(getKittyStatementsByMonth, {
     name: "getKittyStatementsByMonth",
     options: { variables: { month: "02/2018" } }
+  }),
+  graphql(allHousemates, {
+    name: "allHousemates"
+    // options: { variables: { month: "02/2018" } }
   })
 )(KittyStatements);

@@ -9,6 +9,7 @@ const getKittyStatementsByMonth = gql`
       type
       amount
       balance
+      owner
     }
   }
 `;
