@@ -3,6 +3,7 @@ import moment from "moment";
 import { compose, graphql } from "react-apollo";
 import {
   getKittyStatementsByMonth,
+  getKittyStatementsById,
   getAllKittyStatements
 } from "./graphql/kittyStatements";
 import {
@@ -50,12 +51,22 @@ class KittyStatements extends React.Component {
     });
   };
   assignHousemate = (housemate, kittyId) => {
-    this.props.assignHousemateToStatement({
-      variables: {
-        newOwner: housemate.id,
-        kittyId
-      }
-    });
+    console.log(
+      "this.props.getKittyStatementsById",
+      this.props.getKittyStatementsById
+    );
+    this.props
+      .assignHousemateToStatement({
+        variables: {
+          newOwner: housemate.id,
+          kittyId
+        }
+      })
+      .then(() =>
+        this.props.getKittyStatementsById.refetch({
+          id: kittyId
+        })
+      );
   };
 
   render() {
@@ -114,7 +125,7 @@ class KittyStatements extends React.Component {
                                 onClick={housemate =>
                                   this.assignHousemate(housemate, row.id)
                                 }
-                                header="Select Housemate"
+                                header={row.owner || "Select Housemate"}
                               />
                             </td>
                           );
@@ -138,6 +149,9 @@ export default compose(
   graphql(getKittyStatementsByMonth, {
     name: "getKittyStatementsByMonth",
     options: { variables: { month: "02/2018" } }
+  }),
+  graphql(getKittyStatementsById, {
+    name: "getKittyStatementsById"
   }),
   graphql(allHousemates, {
     name: "allHousemates"

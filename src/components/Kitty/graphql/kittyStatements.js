@@ -28,3 +28,17 @@ export const getKittyStatementsByMonth = gql`
     }
   }
 `;
+export const getKittyStatementsById = gql`
+  query getKittyStatementsById($id: Int) {
+    getKittyStatementsById(id: $id) {
+      id
+      date
+      counterParty
+      reference
+      type
+      amount
+      balance
+      owner
+    }
+  }
+`;
