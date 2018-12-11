@@ -3,14 +3,14 @@ import moment from "moment";
 import { compose, graphql } from "react-apollo";
 import {
   getKittyStatementsByMonth,
-  getKittyStatementsById,
   getAllKittyStatements
 } from "./graphql/kittyStatements";
 import {
   allHousemates,
-  assignHousemateToStatement
+  assignHousemateToStatement,
+  housemateById
 } from "./graphql/housemates";
-
+import KittyOwnerDropdown from "./KittyOwnerDropdown";
 import Dropdown from "../Common/Dropdown";
 
 class KittyStatements extends React.Component {
@@ -20,28 +20,19 @@ class KittyStatements extends React.Component {
     isOpen: false
   };
 
-  getDropdownItems = {
-    dates: () => {
-      const { getAllKittyStatements } = this.props;
-      const availableMonths = [];
-      if (!getAllKittyStatements.loading) {
-        getAllKittyStatements.getAllKittyStatements.map(statement => {
-          if (!availableMonths.includes(statement.month)) {
-            availableMonths.push(statement.month);
-          }
-          return null;
-        });
-        return availableMonths;
-      }
-      return null;
-    },
-    housemates: () => {
-      const { allHousemates } = this.props;
-      if (!allHousemates.loading) {
-        return allHousemates.allHousemates.map(housemate => housemate);
-      }
-      return null;
+  getDropdownItems = () => {
+    const { getAllKittyStatements } = this.props;
+    const availableMonths = [];
+    if (!getAllKittyStatements.loading) {
+      getAllKittyStatements.getAllKittyStatements.map(statement => {
+        if (!availableMonths.includes(statement.month)) {
+          availableMonths.push(statement.month);
+        }
+        return null;
+      });
+      return availableMonths;
     }
+    return null;
   };
 
   filterState = monthSelected => {
@@ -49,24 +40,6 @@ class KittyStatements extends React.Component {
     this.props.getKittyStatementsByMonth.refetch({
       month: monthSelected
     });
-  };
-  assignHousemate = (housemate, kittyId) => {
-    console.log(
-      "this.props.getKittyStatementsById",
-      this.props.getKittyStatementsById
-    );
-    this.props
-      .assignHousemateToStatement({
-        variables: {
-          newOwner: housemate.id,
-          kittyId
-        }
-      })
-      .then(() =>
-        this.props.getKittyStatementsById.refetch({
-          id: kittyId
-        })
-      );
   };
 
   render() {
@@ -89,7 +62,7 @@ class KittyStatements extends React.Component {
     return (
       <div className="page-content">
         <Dropdown
-          menuItems={this.getDropdownItems.dates()}
+          menuItems={this.getDropdownItems()}
           onClick={monthSelected => this.filterState(monthSelected)}
           header="Select Month"
         />
@@ -119,14 +92,7 @@ class KittyStatements extends React.Component {
                         if (columnNames[i] === "owner") {
                           return (
                             <td key={i}>
-                              <Dropdown
-                                menuItems={this.getDropdownItems.housemates()}
-                                displayValue={"firstName"}
-                                onClick={housemate =>
-                                  this.assignHousemate(housemate, row.id)
-                                }
-                                header={row.owner || "Select Housemate"}
-                              />
+                              <KittyOwnerDropdown row={row} />
                             </td>
                           );
                         }
@@ -150,13 +116,7 @@ export default compose(
     name: "getKittyStatementsByMonth",
     options: { variables: { month: "02/2018" } }
   }),
-  graphql(getKittyStatementsById, {
-    name: "getKittyStatementsById"
-  }),
   graphql(allHousemates, {
     name: "allHousemates"
-  }),
-  graphql(assignHousemateToStatement, {
-    name: "assignHousemateToStatement"
   })
 )(KittyStatements);

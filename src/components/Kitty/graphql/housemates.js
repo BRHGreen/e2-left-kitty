@@ -8,6 +8,15 @@ export const allHousemates = gql`
     }
   }
 `;
+export const housemateById = gql`
+  query housemateById($id: Int) {
+    housemateById(id: $id) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
 export const assignHousemateToStatement = gql`
   mutation assignHousemateToStatement($newOwner: Int!, $kittyId: Int!) {
     assignHousemateToStatement(newOwner: $newOwner, kittyId: $kittyId) {
