@@ -27,9 +27,9 @@ export const getKittyStatementsByMonth = gql`
     }
   }
 `;
-export const getKittyStatementsById = gql`
-  query getKittyStatementsById($id: Int) {
-    getKittyStatementsById(id: $id) {
+export const getKittyStatementsByOwnerId = gql`
+  query getKittyStatementsByOwnerId($owner: Int) {
+    getKittyStatementsByOwnerId(owner: $owner) {
       id
       date
       counterParty

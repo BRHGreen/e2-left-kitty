@@ -1,3 +1,7 @@
-$spacing-lg: 1em;
-$spacing-md: .5em;
-$spacing-sm: .25em;
+@import "node_modules/spectre.css/src/_variables.scss";
+
+@mixin boxshadow {
+  box-shadow: 0px 2px 12px -4px $gray-color;
+}
+
+$border-radius: 0.2rem;

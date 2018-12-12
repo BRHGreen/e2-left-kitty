@@ -1,6 +1,13 @@
 @import "node_modules/spectre.css/src/_accordions.scss";
 
 .accordion {
+  width: 150px;
+  position: relative;
+  padding: $layout-spacing-sm;
+  border: 1px solid $border-color;
+  &:hover {
+    cursor: pointer;
+  }
   input:checked ~,
   &[open] {
     & .accordion-body {
@@ -8,9 +15,24 @@
     }
   }
 
+  .accordion-header {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .accordion-body {
     overflow: scroll;
     position: absolute;
     background: white;
+    left: -1px;
+    top: 41px;
+    z-index: 10;
+    @include boxshadow;
+    border-radius: $border-radius;
+  }
+  .placeholder {
+    color: $gray-color;
+    font-size: $font-size-sm;
   }
 }

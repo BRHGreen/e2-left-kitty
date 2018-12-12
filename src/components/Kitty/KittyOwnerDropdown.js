@@ -5,9 +5,9 @@ import {
   assignHousemateToStatement,
   allHousemates
 } from "./graphql/housemates";
-import { getKittyStatementsById } from "./graphql/kittyStatements";
+import { getKittyStatementsByOwnerId } from "./graphql/kittyStatements";
 
-import Dropdown from "../Common/Dropdown";
+import Dropdown from "../common/Dropdown";
 
 const KittyOwnerDropdown = props => {
   const {
@@ -36,8 +36,8 @@ const KittyOwnerDropdown = props => {
       }
     })
       .then(() =>
-        props.getKittyStatementsById.refetch({
-          id: row.id
+        props.getKittyStatementsByOwnerId.refetch({
+          owner: housemate.id
         })
       )
       .catch(err => console.log(err));
@@ -50,8 +50,9 @@ const KittyOwnerDropdown = props => {
       onClick={housemate => assignHousemate(housemate, row)}
       header={
         (housemateById.housemateById &&
-          housemateById.housemateById.firstName) ||
-        "Select Housemate"
+          housemateById.housemateById.firstName) || (
+          <span className="placeholder">assign owner...</span>
+        )
       }
     />
   );
@@ -68,8 +69,8 @@ export default compose(
   graphql(allHousemates, {
     name: "allHousemates"
   }),
-  graphql(getKittyStatementsById, {
-    name: "getKittyStatementsById"
+  graphql(getKittyStatementsByOwnerId, {
+    name: "getKittyStatementsByOwnerId"
     //maybe skip unless refetch?
   })
 )(KittyOwnerDropdown);

@@ -10,7 +10,7 @@ import {
   assignHousemateToStatement
 } from "./graphql/housemates";
 import KittyOwnerDropdown from "./KittyOwnerDropdown";
-import Dropdown from "../Common/Dropdown";
+import Dropdown from "../common/Dropdown";
 
 class KittyStatements extends React.Component {
   state = {

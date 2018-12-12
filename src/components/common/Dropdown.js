@@ -5,7 +5,6 @@ const Dropdown = props => {
   return (
     <details className="accordion" open={isOpen}>
       <summary className="accordion-header">{header}</summary>
-
       <div className="accordion-body">
         <ul className="menu menu-nav">
           {menuItems &&
