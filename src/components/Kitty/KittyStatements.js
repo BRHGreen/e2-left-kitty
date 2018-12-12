@@ -7,8 +7,7 @@ import {
 } from "./graphql/kittyStatements";
 import {
   allHousemates,
-  assignHousemateToStatement,
-  housemateById
+  assignHousemateToStatement
 } from "./graphql/housemates";
 import KittyOwnerDropdown from "./KittyOwnerDropdown";
 import Dropdown from "../Common/Dropdown";
