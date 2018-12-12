@@ -1,9 +1,17 @@
 import React from "react";
 
 const Dropdown = props => {
-  const { isOpen, onClose, header, menuItems, onClick, displayValue } = props;
+  const {
+    isOpen,
+    onClose,
+    header,
+    menuItems,
+    onClick,
+    displayValue,
+    className
+  } = props;
   return (
-    <details className="accordion" open={isOpen}>
+    <details className={`accordion ${className}`} open={isOpen}>
       <summary className="accordion-header">{header}</summary>
       <div className="accordion-body">
         <ul className="menu menu-nav">

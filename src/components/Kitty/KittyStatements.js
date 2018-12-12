@@ -56,15 +56,28 @@ class KittyStatements extends React.Component {
         getKittyStatementsByMonth.getKittyStatementsByMonth[0]
       ).filter(key => !key.includes("__"));
 
+    const monthCurrentlyDisplayed =
+      !getKittyStatementsByMonth.loading &&
+      moment(
+        parseInt(getKittyStatementsByMonth.getKittyStatementsByMonth[0].date)
+      ).format("MMMM YYYY");
+
+    console.log(monthCurrentlyDisplayed);
+
     if (loading || getKittyStatementsByMonth.loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
     return (
       <div className="page-content">
-        <Dropdown
-          menuItems={this.getDropdownItems()}
-          onClick={monthSelected => this.filterState(monthSelected)}
-          header="Select Month"
-        />
+        <div className="page-header">
+          <h1>{monthCurrentlyDisplayed}</h1>
+          <Dropdown
+            menuItems={this.getDropdownItems()}
+            onClick={monthSelected => this.filterState(monthSelected)}
+            header="Change month..."
+            className="mb-2"
+          />
+        </div>
+
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -112,8 +125,7 @@ export default compose(
     name: "getAllKittyStatements"
   }),
   graphql(getKittyStatementsByMonth, {
-    name: "getKittyStatementsByMonth",
-    options: { variables: { month: "03/2018" } }
+    name: "getKittyStatementsByMonth"
   }),
   graphql(allHousemates, {
     name: "allHousemates"

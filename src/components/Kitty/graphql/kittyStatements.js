@@ -15,7 +15,7 @@ export const getAllKittyStatements = gql`
 `;
 
 export const getKittyStatementsByMonth = gql`
-  query getKittyStatementsByMonth($month: String!) {
+  query getKittyStatementsByMonth($month: String) {
     getKittyStatementsByMonth(month: $month) {
       id
       date
