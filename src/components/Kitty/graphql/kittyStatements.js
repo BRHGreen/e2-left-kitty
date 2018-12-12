@@ -21,7 +21,6 @@ export const getKittyStatementsByMonth = gql`
       date
       counterParty
       reference
-      type
       amount
       balance
       owner

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 const createKittyStatement = gql`
   mutation(
     $date: String
-    $counterParty: String
+    $counterParty: [String]
     $reference: String
     $type: String
     $amount: Float

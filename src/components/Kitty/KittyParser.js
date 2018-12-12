@@ -29,7 +29,7 @@ class KittyParser extends React.Component {
           variables: {
             // check for date here if none then pass null
             date: moment(arr[0], "DD/MM/YYYY").format("MM/DD/YYYY"),
-            counterParty: arr[1],
+            counterParty: [arr[1]],
             reference: arr[2],
             type: arr[3],
             amount: parseFloat(arr[4]),

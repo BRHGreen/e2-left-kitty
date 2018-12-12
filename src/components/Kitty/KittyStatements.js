@@ -114,7 +114,7 @@ export default compose(
   }),
   graphql(getKittyStatementsByMonth, {
     name: "getKittyStatementsByMonth",
-    options: { variables: { month: "02/2018" } }
+    options: { variables: { month: "03/2018" } }
   }),
   graphql(allHousemates, {
     name: "allHousemates"

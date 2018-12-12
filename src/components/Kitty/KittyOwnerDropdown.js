@@ -49,7 +49,8 @@ const KittyOwnerDropdown = props => {
       displayValue={"firstName"}
       onClick={housemate => assignHousemate(housemate, row)}
       header={
-        (!housemateById.loading && housemateById.housemateById.firstName) ||
+        (housemateById.housemateById &&
+          housemateById.housemateById.firstName) ||
         "Select Housemate"
       }
     />
