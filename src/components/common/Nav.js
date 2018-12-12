@@ -1,16 +1,28 @@
 import React from "react";
 
-const Nav = () => (
-  <header className="navbar bg-gray docs-block">
-    <section className="navbar-section">
-      <a href="/" className="btn btn-link">
-        Home
-      </a>
-      <a href="/kitty-parser" className="btn btn-link">
-        Add Statement
-      </a>
-    </section>
-  </header>
-);
+const Nav = ({
+  history: {
+    location: { pathname }
+  }
+}) => {
+  const navItems = [
+    { label: "Statements", href: "/" },
+    { label: "Add Statement", href: "/kitty-parser" },
+    { label: "Housemates", href: "/housemates" }
+  ];
+  return (
+    <header className="navbar bg-gray docs-block">
+      <section className="navbar-section">
+        {navItems.map(({ label, href }, i) => (
+          <a key={i} href={href} className={"btn btn-link"}>
+            <h4 className={pathname === href ? "underline" : "font-light"}>
+              {label}
+            </h4>
+          </a>
+        ))}
+      </section>
+    </header>
+  );
+};
 
 export default Nav;

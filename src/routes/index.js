@@ -15,7 +15,7 @@ const client = new ApolloClient({
 export const makeMainRoutes = () => {
   return (
     <ApolloProvider client={client}>
-      <Nav />
+      <Nav history={history} />
       <Router history={history}>
         <div>
           <Route exact path="/" component={KittyStatements} />
