@@ -41,3 +41,17 @@ export const getKittyStatementsByOwnerId = gql`
     }
   }
 `;
+
+export const getPayInKittyStatementsByOwnerId = gql`
+  query getPayInKittyStatementsByOwnerId($owner: Int) {
+    getPayInKittyStatementsByOwnerId(owner: $owner) {
+      id
+      date
+      counterParty
+      reference
+      amount
+      balance
+      owner
+    }
+  }
+`;

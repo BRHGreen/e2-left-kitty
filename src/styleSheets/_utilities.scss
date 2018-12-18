@@ -1,6 +1,18 @@
 .underline {
   text-decoration: underline;
 }
-.font-light {
-  // font-weight: 400;
+
+.flex-baseline {
+  align-items: baseline;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.striped {
+  border-bottom: 1px solid $border-color;
+  &:nth-child(odd) {
+    background: $gray-color-light;
+  }
 }
