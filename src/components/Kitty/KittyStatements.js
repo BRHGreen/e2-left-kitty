@@ -67,7 +67,7 @@ class KittyStatements extends React.Component {
     if (loading || getKittyStatementsByMonth.loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
     return (
-      <div className="page-content">
+      <div>
         <div className="page-header">
           <h1>{monthCurrentlyDisplayed}</h1>
           <Dropdown

@@ -9,7 +9,6 @@ const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
     Object.keys(allHousemates[0]).filter(key => !key.includes("__"));
 
   const formatDate = date => {
-    console.log("date", date);
     if (date === null) {
       return "-";
     }
@@ -32,17 +31,17 @@ const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
             (row, i) =>
               columnNames && (
                 <tr key={i}>
-                  {columnNames.map((_, i) => {
+                  {columnNames.map((columnName, i) => {
                     if (
-                      columnNames[i] === "contributingFrom" ||
-                      columnNames[i] === "contributingTo"
+                      columnName === "contributingFrom" ||
+                      columnName === "contributingTo"
                     ) {
-                      return <td key={i}>{formatDate(row[columnNames[i]])}</td>;
+                      return <td key={i}>{formatDate(row[columnName])}</td>;
                     }
-                    if (typeof row[columnNames[i]] !== "string") {
-                      return <td key={i}>{row[columnNames[i]].toString()}</td>;
+                    if (typeof row[columnName] !== "string") {
+                      return <td key={i}>{row[columnName].toString()}</td>;
                     }
-                    return <td key={i}>{row[columnNames[i]]}</td>;
+                    return <td key={i}>{row[columnName]}</td>;
                   })}
                 </tr>
               )
