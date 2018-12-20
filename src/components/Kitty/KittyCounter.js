@@ -1,5 +1,9 @@
 import React from "react";
-import { getPayInKittyStatementsByOwnerId } from "./graphql/kittyStatements";
+import {
+  getPayInKittyStatementsByOwnerId,
+  getAllKittyStatements,
+  getKittyMonths
+} from "./graphql/kittyStatements";
 import { compose, graphql } from "react-apollo";
 import moment from "moment";
 
@@ -8,10 +12,10 @@ const KittyCounter = ({
     loading,
     error,
     getPayInKittyStatementsByOwnerId: statement
-  }
-  // getPayInKittyStatementsByOwnerId: { getPayInKittyStatementsByOwnerId }
+  },
+  months
 }) => {
-  console.log(statement);
+  console.log(months);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Loading...</div>;
   return (

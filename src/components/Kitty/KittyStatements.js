@@ -68,7 +68,7 @@ class KittyStatements extends React.Component {
     if (error) return <p>Error :(</p>;
     return (
       <div>
-        <div className="page-header">
+        <div className="p-2">
           <h1>{monthCurrentlyDisplayed}</h1>
           <Dropdown
             menuItems={this.getDropdownItems()}

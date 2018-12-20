@@ -7,6 +7,7 @@ const Nav = ({
 }) => {
   const navItems = [
     { label: "Statements", href: "/" },
+    { label: "Payment Records", href: "/payment-records" },
     { label: "Add Statement", href: "/kitty-parser" },
     { label: "Housemates", href: "/housemates" }
   ];

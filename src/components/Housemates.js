@@ -4,7 +4,10 @@ import moment from "moment";
 import gql from "graphql-tag";
 import KittyCounter from "./Kitty/KittyCounter";
 
-const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
+const Housemates = ({
+  getHousemates: { allHousemates, loading, error },
+  getKittyMonths
+}) => {
   const formatDate = date => {
     if (date === null) {
       return "-";
@@ -37,7 +40,7 @@ const Housemates = ({ getHousemates: { allHousemates, loading, error } }) => {
                   contributingTo
                 )}`}</div>
               </div>
-              <KittyCounter housemate={id} />
+              <KittyCounter housemate={id} months={months} />
             </div>
           )
         )}

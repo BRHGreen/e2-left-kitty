@@ -6,6 +6,7 @@ import history from "./history";
 import Nav from "../components/common/Nav";
 import KittyParser from "../components/Kitty/KittyParser";
 import KittyStatements from "../components/Kitty/KittyStatements";
+import PaymentRecords from "../components/Kitty/PaymentRecords";
 import Housemates from "../components/Housemates";
 
 const client = new ApolloClient({
@@ -21,6 +22,7 @@ export const makeMainRoutes = () => {
           <Route exact path="/" component={KittyStatements} />
           <Route path="/kitty-parser" component={KittyParser} />
           <Route path="/housemates" component={Housemates} />
+          <Route path="/payment-records" component={PaymentRecords} />
         </div>
       </Router>
     </ApolloProvider>

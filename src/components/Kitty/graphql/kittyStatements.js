@@ -27,6 +27,15 @@ export const getKittyStatementsByMonth = gql`
     }
   }
 `;
+
+export const getKittyMonths = gql`
+  query getAllKittyStatements {
+    getAllKittyStatements {
+      month
+    }
+  }
+`;
+
 export const getKittyStatementsByOwnerId = gql`
   query getKittyStatementsByOwnerId($owner: Int) {
     getKittyStatementsByOwnerId(owner: $owner) {
@@ -52,6 +61,15 @@ export const getPayInKittyStatementsByOwnerId = gql`
       amount
       balance
       owner
+    }
+  }
+`;
+
+export const getPaymentsDueFromHousematesForMonth = gql`
+  query getPaymentsDueFromHousematesForMonth($month: String) {
+    getPaymentsDueFromHousematesForMonth(month: $month) {
+      firstName
+      lastName
     }
   }
 `;
