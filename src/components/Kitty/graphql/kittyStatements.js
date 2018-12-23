@@ -65,11 +65,23 @@ export const getPayInKittyStatementsByOwnerId = gql`
   }
 `;
 
-export const getPaymentsDueFromHousematesForMonth = gql`
-  query getPaymentsDueFromHousematesForMonth($month: String) {
-    getPaymentsDueFromHousematesForMonth(month: $month) {
-      firstName
-      lastName
+export const getPayInKittyStatementsByMonth = gql`
+  query getPayInKittyStatementsByMonth($month: String) {
+    getPayInKittyStatementsByMonth(month: $month) {
+      amount
+      reference
+      housemate {
+        firstName
+        lastName
+      }
+    }
+  }
+`;
+
+export const updateMonthsPaid = gql`
+  mutation updateMonthsPaid($owner: Int!, $monthsPaid: String!) {
+    updateMonthsPaid(owner: $owner, monthsPaid: $monthsPaid) {
+      ok
     }
   }
 `;

@@ -24,3 +24,13 @@ export const assignHousemateToStatement = gql`
     }
   }
 `;
+
+export const getPaymentsDueFromHousematesForMonth = gql`
+  query getPaymentsDueFromHousematesForMonth($month: String) {
+    getPaymentsDueFromHousematesForMonth(month: $month) {
+      firstName
+      lastName
+      monthsPaid
+    }
+  }
+`;

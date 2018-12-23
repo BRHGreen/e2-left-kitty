@@ -15,8 +15,8 @@ const PaymentRecords = ({ getKittyMonths }) => {
 
   return (
     months.length > 0 &&
-    months.map(month => {
-      return <PaymentsItem month={month} />;
+    months.map((month, i) => {
+      return <PaymentsItem key={i} month={month} />;
     })
   );
 };

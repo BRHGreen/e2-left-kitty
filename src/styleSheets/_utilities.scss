@@ -5,6 +5,12 @@
 .flex-baseline {
   align-items: baseline;
 }
+.flex-center {
+  align-items: centre;
+}
+.flex-end {
+  align-items: end;
+}
 
 .flex-between {
   justify-content: space-between;
@@ -12,7 +18,11 @@
 
 .striped {
   border-bottom: 1px solid $border-color;
-  &:nth-child(odd) {
+  &:nth-child(even) {
     background: $gray-color-light;
   }
+}
+
+.height-lg {
+  height: 89px;
 }
