@@ -15,7 +15,6 @@ const KittyCounter = ({
   },
   months
 }) => {
-  console.log(months);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Loading...</div>;
   return (

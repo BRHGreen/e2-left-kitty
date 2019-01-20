@@ -62,8 +62,6 @@ class KittyStatements extends React.Component {
         parseInt(getKittyStatementsByMonth.getKittyStatementsByMonth[0].date)
       ).format("MMMM YYYY");
 
-    console.log(monthCurrentlyDisplayed);
-
     if (loading || getKittyStatementsByMonth.loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
     return (

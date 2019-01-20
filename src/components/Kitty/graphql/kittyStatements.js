@@ -71,6 +71,7 @@ export const getPayInKittyStatementsByMonth = gql`
       amount
       reference
       housemate {
+        id
         firstName
         lastName
       }

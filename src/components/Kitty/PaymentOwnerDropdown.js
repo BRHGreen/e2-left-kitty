@@ -22,7 +22,8 @@ const KittyOwnerDropdown = props => {
     housemateById,
     updateMonthsPaid,
     month,
-    getPayInKittyStatementsByOwnerId
+    getPayInKittyStatementsByOwnerId,
+    paymentsDue
   } = props;
 
   const getDropdownItems = () => {
@@ -40,14 +41,9 @@ const KittyOwnerDropdown = props => {
         monthsPaid: months
       }
     })
-      .then(() =>
-        housemateById.refetch({
-          id: housemate.id
-        })
-      )
+      .then(() => paymentsDue.refetch())
       .catch(err => console.log("err", err));
   };
-  console.log("month", month);
   return (
     <Dropdown
       menuItems={getDropdownItems()}
@@ -65,8 +61,10 @@ const KittyOwnerDropdown = props => {
 
 export default compose(
   graphql(housemateById, {
-    name: "housemateById"
-    // options: props => ({ variables: { id: props.row.owner } })
+    name: "housemateById",
+    options: props => {
+      return { variables: { id: props.housemateId } };
+    }
   }),
   graphql(updateMonthsPaid, {
     name: "updateMonthsPaid"

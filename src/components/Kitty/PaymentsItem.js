@@ -7,6 +7,7 @@ import PaymentOwnerDropdown from "./PaymentOwnerDropdown";
 const PaymentsItem = props => {
   const {
     month,
+    getPaymentsDueFromHousematesForMonth,
     getPaymentsDueFromHousematesForMonth: {
       getPaymentsDueFromHousematesForMonth: paymentsDue
     },
@@ -26,8 +27,9 @@ const PaymentsItem = props => {
           {paymentsDue &&
             paymentsDue.map((payment, i) => {
               if (payment) {
-                console.log("payment.monthsPaid", payment.monthsPaid);
-                console.log("month", month);
+                const hasPaid =
+                  payment.monthsPaid && payment.monthsPaid.includes(month);
+
                 const { firstName, lastName } = payment;
                 return (
                   <div
@@ -36,12 +38,13 @@ const PaymentsItem = props => {
                   >
                     <h5>{`${firstName} ${lastName}`}</h5>
                     <div>
-                      <button className="btn btn-secondary btn-lg">
-                        {payment.monthsPaid &&
-                        payment.monthsPaid.includes(month)
-                          ? "Paid"
-                          : "Not Paid"}
-                      </button>
+                      <span
+                        className={`label label-${
+                          hasPaid ? "primary" : "secondary"
+                        }`}
+                      >
+                        {hasPaid ? "Paid" : "Not Paid"}
+                      </span>
                     </div>
                   </div>
                 );
@@ -88,7 +91,10 @@ const PaymentsItem = props => {
                         )}
                       </div>
                     </div>
-                    <PaymentOwnerDropdown month={month} />
+                    <PaymentOwnerDropdown
+                      month={month}
+                      paymentsDue={getPaymentsDueFromHousematesForMonth}
+                    />
                   </div>
                 );
               }
