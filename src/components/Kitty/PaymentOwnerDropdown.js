@@ -45,17 +45,19 @@ const KittyOwnerDropdown = props => {
       .catch(err => console.log("err", err));
   };
   return (
-    <Dropdown
-      menuItems={getDropdownItems()}
-      displayValue={"firstName"}
-      onClick={housemate => updateMonthsPaidOnHousemate(housemate, month)}
-      header={
-        (housemateById.housemateById &&
-          housemateById.housemateById.firstName) || (
-          <span className="placeholder">assign owner...</span>
-        )
-      }
-    />
+    !housemateById.loading && (
+      <Dropdown
+        menuItems={getDropdownItems()}
+        displayValue={"firstName"}
+        onClick={housemate => updateMonthsPaidOnHousemate(housemate, month)}
+        header={
+          (housemateById.housemateById &&
+            housemateById.housemateById.firstName) || (
+            <span className="placeholder">assign owner...</span>
+          )
+        }
+      />
+    )
   );
 };
 

@@ -108,8 +108,7 @@ const PaymentsItem = props => {
 
 export default compose(
   graphql(getPaymentsDueFromHousematesForMonth, {
-    name: "getPaymentsDueFromHousematesForMonth",
-    options: props => ({ variables: { month: props.month } })
+    name: "getPaymentsDueFromHousematesForMonth"
   }),
   graphql(getPayInKittyStatementsByMonth, {
     name: "getPayInKittyStatementsByMonth",
