@@ -3,7 +3,7 @@ import moment from "moment";
 import { compose, graphql } from "react-apollo";
 import {
   getKittyStatementsByMonth,
-  getAllKittyStatements
+  getMonthsFromKittyStatements
 } from "./graphql/kittyStatements";
 import {
   allHousemates,
@@ -14,16 +14,15 @@ import Dropdown from "../common/Dropdown";
 
 class KittyStatements extends React.Component {
   state = {
-    monthSelected: null,
     housemate: null,
     isOpen: false
   };
 
   getDropdownItems = () => {
-    const { getAllKittyStatements } = this.props;
+    const { getMonthsFromKittyStatements: months } = this.props;
     const availableMonths = [];
-    if (!getAllKittyStatements.loading) {
-      getAllKittyStatements.getAllKittyStatements.map(statement => {
+    if (!months.loading) {
+      months.getAllKittyStatements.map(statement => {
         if (!availableMonths.includes(statement.month)) {
           availableMonths.push(statement.month);
         }
@@ -119,8 +118,8 @@ class KittyStatements extends React.Component {
 }
 
 export default compose(
-  graphql(getAllKittyStatements, {
-    name: "getAllKittyStatements"
+  graphql(getMonthsFromKittyStatements, {
+    name: "getMonthsFromKittyStatements"
   }),
   graphql(getKittyStatementsByMonth, {
     name: "getKittyStatementsByMonth"

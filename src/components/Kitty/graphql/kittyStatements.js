@@ -1,5 +1,10 @@
 import gql from "graphql-tag";
 
+export const getLatestMonth = gql`
+  query getLatestMonth {
+    getLatestMonth
+  }
+`;
 export const getAllKittyStatements = gql`
   query getAllKittyStatements {
     getAllKittyStatements {
@@ -9,6 +14,14 @@ export const getAllKittyStatements = gql`
       type
       amount
       balance
+      month
+    }
+  }
+`;
+
+export const getMonthsFromKittyStatements = gql`
+  query getAllKittyStatements {
+    getAllKittyStatements {
       month
     }
   }
