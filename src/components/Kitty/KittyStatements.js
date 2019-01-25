@@ -3,12 +3,10 @@ import moment from "moment";
 import { compose, graphql } from "react-apollo";
 import {
   getKittyStatementsByMonth,
-  getMonthsFromKittyStatements
-} from "./graphql/kittyStatements";
-import {
-  allHousemates,
+  getMonthsFromKittyStatements,
   assignHousemateToStatement
-} from "./graphql/housemates";
+} from "./graphql/kittyStatements";
+import { allHousemates } from "./graphql/housemates";
 import KittyOwnerDropdown from "./KittyOwnerDropdown";
 import Dropdown from "../common/Dropdown";
 

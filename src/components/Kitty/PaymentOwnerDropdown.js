@@ -2,13 +2,10 @@ import React from "react";
 import { compose, graphql } from "react-apollo";
 import {
   housemateById,
-  assignHousemateToStatement,
-  allHousemates
-} from "./graphql/housemates";
-import {
-  getPayInKittyStatementsByOwnerId,
+  allHousemates,
   updateMonthsPaid
-} from "./graphql/kittyStatements";
+} from "./graphql/housemates";
+import { updatePaymentAssignee } from "./graphql/kittyStatements";
 
 import Dropdown from "../common/Dropdown";
 
@@ -21,9 +18,12 @@ const KittyOwnerDropdown = props => {
     housemate,
     housemateById,
     updateMonthsPaid,
+    updatePaymentAssignee,
     month,
     getPayInKittyStatementsByOwnerId,
-    paymentsDue
+    paymentsDue,
+    paymentsMade,
+    payment
   } = props;
 
   const getDropdownItems = () => {
@@ -40,10 +40,18 @@ const KittyOwnerDropdown = props => {
         owner: housemate.id,
         monthsPaid: months
       }
+    });
+    updatePaymentAssignee({
+      variables: {
+        assignee: housemate.id,
+        kittyId: payment.id
+      }
     })
       .then(() => paymentsDue.refetch())
+      .then(() => paymentsMade.refetch())
       .catch(err => console.log("err", err));
   };
+  console.log(payment);
   return (
     !housemateById.loading && (
       <Dropdown
@@ -51,8 +59,7 @@ const KittyOwnerDropdown = props => {
         displayValue={"firstName"}
         onClick={housemate => updateMonthsPaidOnHousemate(housemate, month)}
         header={
-          (housemateById.housemateById &&
-            housemateById.housemateById.firstName) || (
+          (payment.assignee && payment.assignee.firstName) || (
             <span className="placeholder">assign owner...</span>
           )
         }
@@ -71,11 +78,10 @@ export default compose(
   graphql(updateMonthsPaid, {
     name: "updateMonthsPaid"
   }),
+  graphql(updatePaymentAssignee, {
+    name: "updatePaymentAssignee"
+  }),
   graphql(allHousemates, {
     name: "allHousemates"
-  }),
-  graphql(getPayInKittyStatementsByOwnerId, {
-    name: "getPayInKittyStatementsByOwnerId"
-    //maybe skip unless refetch?
   })
 )(KittyOwnerDropdown);

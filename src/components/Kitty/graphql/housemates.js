@@ -17,13 +17,6 @@ export const housemateById = gql`
     }
   }
 `;
-export const assignHousemateToStatement = gql`
-  mutation assignHousemateToStatement($newOwner: Int!, $kittyId: Int!) {
-    assignHousemateToStatement(newOwner: $newOwner, kittyId: $kittyId) {
-      ok
-    }
-  }
-`;
 
 export const getPaymentsDueFromHousematesForMonth = gql`
   query getPaymentsDueFromHousematesForMonth($month: String) {
@@ -31,6 +24,14 @@ export const getPaymentsDueFromHousematesForMonth = gql`
       firstName
       lastName
       monthsPaid
+    }
+  }
+`;
+
+export const updateMonthsPaid = gql`
+  mutation updateMonthsPaid($owner: Int!, $monthsPaid: String!) {
+    updateMonthsPaid(owner: $owner, monthsPaid: $monthsPaid) {
+      ok
     }
   }
 `;

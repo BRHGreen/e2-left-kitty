@@ -1,11 +1,10 @@
 import React from "react";
 import { compose, graphql } from "react-apollo";
+import { housemateById, allHousemates } from "./graphql/housemates";
 import {
-  housemateById,
-  assignHousemateToStatement,
-  allHousemates
-} from "./graphql/housemates";
-import { getKittyStatementsByOwnerId } from "./graphql/kittyStatements";
+  getKittyStatementsByOwnerId,
+  assignHousemateToStatement
+} from "./graphql/kittyStatements";
 
 import Dropdown from "../common/Dropdown";
 

@@ -25,6 +25,7 @@ class PaymentsItem extends React.Component {
   getDropdownItems = () => {
     const { getMonthsFromKittyStatements: months } = this.props;
     const availableMonths = [];
+    console.log(months);
     if (!months.loading) {
       months.getAllKittyStatements.map(statement => {
         if (!availableMonths.includes(statement.month)) {
@@ -61,8 +62,6 @@ class PaymentsItem extends React.Component {
         getPayInKittyStatementsByMonth: paymentsMade
       }
     } = this.props;
-
-    console.log("this.state", this.state);
 
     if (!paymentsMade || !paymentsDue) <div>Loading...</div>;
     return (
@@ -150,6 +149,7 @@ class PaymentsItem extends React.Component {
                           </div>
                         </div>
                         <PaymentOwnerDropdown
+                          payment={payment}
                           housemateId={housemate && housemate.id}
                           month={this.state.monthSelected}
                           paymentsDue={getPaymentsDueFromHousematesForMonth}

@@ -92,8 +92,11 @@ const PaymentsItem = props => {
                       </div>
                     </div>
                     <PaymentOwnerDropdown
+                      paymentId={payment.id}
+                      paymentAssignee={paymentAssignee}
                       month={month}
                       paymentsDue={getPaymentsDueFromHousematesForMonth}
+                      paymentsMade={getPayInKittyStatementsByMonth}
                     />
                   </div>
                 );

@@ -81,6 +81,7 @@ export const getPayInKittyStatementsByOwnerId = gql`
 export const getPayInKittyStatementsByMonth = gql`
   query getPayInKittyStatementsByMonth($month: String) {
     getPayInKittyStatementsByMonth(month: $month) {
+      id
       amount
       reference
       housemate {
@@ -88,13 +89,24 @@ export const getPayInKittyStatementsByMonth = gql`
         firstName
         lastName
       }
+      assignee {
+        firstName
+      }
     }
   }
 `;
 
-export const updateMonthsPaid = gql`
-  mutation updateMonthsPaid($owner: Int!, $monthsPaid: String!) {
-    updateMonthsPaid(owner: $owner, monthsPaid: $monthsPaid) {
+export const assignHousemateToStatement = gql`
+  mutation assignHousemateToStatement($newOwner: Int!, $kittyId: Int!) {
+    assignHousemateToStatement(newOwner: $newOwner, kittyId: $kittyId) {
+      ok
+    }
+  }
+`;
+
+export const updatePaymentAssignee = gql`
+  mutation updatePaymentAssignee($assignee: Int!, $kittyId: Int!) {
+    updatePaymentAssignee(assignee: $assignee, kittyId: $kittyId) {
       ok
     }
   }
