@@ -45,6 +45,8 @@ class PaymentsItem extends React.Component {
     this.setState({ monthSelected });
   };
 
+  const;
+
   render() {
     const {
       getPaymentsDueFromHousematesForMonth,
@@ -54,7 +56,8 @@ class PaymentsItem extends React.Component {
       getPayInKittyStatementsByMonth: {
         getPayInKittyStatementsByMonth: paymentsMade
       },
-      getAvailableMonths
+      getAvailableMonths,
+      latestMonth
     } = this.props;
 
     if (!paymentsMade || !paymentsDue) <div>Loading...</div>;
@@ -64,8 +67,7 @@ class PaymentsItem extends React.Component {
           <div className="p-2">
             <h1>
               {this.state.monthSelected ||
-                (getAvailableMonths.getAvailableMonths &&
-                  getAvailableMonths.getAvailableMonths[0])}
+                (latestMonth.getLatestMonth && latestMonth.getLatestMonth)}
             </h1>
             <Select
               options={this.getMonthsAvailable()}
@@ -81,9 +83,12 @@ class PaymentsItem extends React.Component {
               {paymentsDue &&
                 paymentsDue.map((payment, i) => {
                   if (payment) {
+                    const month = !this.state.monthSelected
+                      ? latestMonth.getLatestMonth && latestMonth.getLatestMonth
+                      : this.state.monthSelected;
+
                     const hasPaid =
-                      payment.monthsPaid &&
-                      payment.monthsPaid.includes(this.state.monthSelected);
+                      payment.monthsPaid && payment.monthsPaid.includes(month);
 
                     const { firstName, lastName } = payment;
                     return (
