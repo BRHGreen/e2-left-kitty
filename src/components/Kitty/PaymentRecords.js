@@ -77,7 +77,7 @@ class PaymentsItem extends React.Component {
             />
           </div>
           <div className="columns">
-            <div className="coumn col-5">
+            <div className="coumn col-4 m-2 border">
               <h5 className="m-2">Payments due from:</h5>
 
               {paymentsDue &&
@@ -111,7 +111,7 @@ class PaymentsItem extends React.Component {
                   }
                 })}
             </div>
-            <div className="coumn col-7">
+            <div className="coumn col-7 m-2 border col-ml-auto">
               <h5 className="m-2">Payments recieved:</h5>
 
               {paymentsMade &&
@@ -120,10 +120,10 @@ class PaymentsItem extends React.Component {
                     const { housemate, reference, amount } = payment;
                     return (
                       <div
-                        className="striped p-2 d-flex flex-end flex-between"
+                        className="striped p-2 d-flex flex-end flex-between colunms"
                         key={i}
                       >
-                        <div>
+                        <div className="column col-7">
                           <div>
                             <b>Housemate:</b>
                             {housemate ? (
@@ -151,13 +151,15 @@ class PaymentsItem extends React.Component {
                             )}
                           </div>
                         </div>
-                        <PaymentMenus
-                          payment={payment}
-                          housemateId={housemate && housemate.id}
-                          month={this.state.monthSelected}
-                          paymentsDue={getPaymentsDueFromHousematesForMonth}
-                          months={this.getMonthsAvailable()}
-                        />
+                        <div className="column col-5">
+                          <PaymentMenus
+                            payment={payment}
+                            housemateId={housemate && housemate.id}
+                            month={this.state.monthSelected}
+                            paymentsDue={getPaymentsDueFromHousematesForMonth}
+                            months={this.getMonthsAvailable()}
+                          />
+                        </div>
                       </div>
                     );
                   }

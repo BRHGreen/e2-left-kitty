@@ -6,7 +6,10 @@ import {
   allHousemates,
   updateMonthsPaid
 } from "./graphql/housemates";
-import { updatePaymentAssignee } from "./graphql/kittyStatements";
+import {
+  updatePaymentAssignee,
+  updatePaymentForMonths
+} from "./graphql/kittyStatements";
 
 import Dropdown from "../common/Dropdown";
 
@@ -29,12 +32,20 @@ class PaymentMenus extends React.Component {
     }
 
     const monthsPaid = this.state.monthsToAdd.map(({ value }) => value);
-    debugger;
+
     this.props
       .updateMonthsPaid({
         variables: {
           housemateId: this.props.payment.assignee.id,
           monthsPaid
+        }
+      })
+      .catch(err => console.log("err", err));
+    this.props
+      .updatePaymentForMonths({
+        variables: {
+          kittyId: this.props.payment.id,
+          months: monthsPaid
         }
       })
       .catch(err => console.log("err", err));
@@ -56,7 +67,6 @@ class PaymentMenus extends React.Component {
       menuItems,
       displayValue,
       onClick,
-      row,
       housemate,
       housemateById,
       updateMonthsPaid,
@@ -66,19 +76,19 @@ class PaymentMenus extends React.Component {
       paymentsDue,
       paymentsMade,
       payment,
-      months
+      months,
+      i
     } = this.props;
     return (
       <div>
-        <Dropdown
+        <Select
           menuItems={this.getHousemates()}
-          displayValue={"firstName"}
-          onClick={housemate => this.updateAssigneeOnStatement(housemate)}
-          header={
-            (payment.assignee && payment.assignee.firstName) || (
-              <span className="placeholder">assign owner...</span>
-            )
-          }
+          onChange={housemate => this.updateAssigneeOnStatement(housemate)}
+          defaultValue={{
+            label:
+              (payment.assignee && payment.assignee.firstName) ||
+              "assign owner..."
+          }}
         />
         <Select
           options={months}
@@ -86,8 +96,12 @@ class PaymentMenus extends React.Component {
             this.setState({ monthsToAdd: monthSelected });
           }}
           isMulti
-          // header="Change month..."
-          // className="mb-2"
+          defaultValue={{
+            value: payment.assignee && payment.assignee.id,
+            label:
+              (payment.assignee && payment.paymentForMonths) ||
+              "update months..."
+          }}
         />
         <button className="btn" onClick={this.updateMonthsPaidOnHousemate}>
           Done
@@ -103,6 +117,9 @@ export default compose(
     options: {
       refetchQueries: ["getPaymentsDueFromHousematesForMonth"]
     }
+  }),
+  graphql(updatePaymentForMonths, {
+    name: "updatePaymentForMonths"
   }),
   graphql(updatePaymentAssignee, {
     name: "updatePaymentAssignee",

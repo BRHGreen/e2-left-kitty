@@ -89,6 +89,7 @@ export const getPayInKittyStatementsByMonth = gql`
       id
       amount
       reference
+      paymentForMonths
       housemate {
         id
         firstName
@@ -97,6 +98,7 @@ export const getPayInKittyStatementsByMonth = gql`
       assignee {
         id
         firstName
+        monthsPaid
       }
     }
   }
@@ -113,6 +115,14 @@ export const assignHousemateToStatement = gql`
 export const updatePaymentAssignee = gql`
   mutation updatePaymentAssignee($assignee: Int!, $kittyId: Int!) {
     updatePaymentAssignee(assignee: $assignee, kittyId: $kittyId) {
+      ok
+    }
+  }
+`;
+
+export const updatePaymentForMonths = gql`
+  mutation updatePaymentForMonths($kittyId: Int!, $months: [String]!) {
+    updatePaymentForMonths(kittyId: $kittyId, months: $months) {
       ok
     }
   }
