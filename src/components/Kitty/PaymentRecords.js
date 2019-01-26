@@ -8,26 +8,18 @@ import {
   getAvailableMonths
 } from "./graphql/kittyStatements";
 import { getPaymentsDueFromHousematesForMonth } from "./graphql/housemates";
-import PaymentOwnerDropdown from "./PaymentOwnerDropdown";
+import PaymentMenus from "./PaymentMenus";
 import { allHousemates } from "./graphql/housemates";
 import Dropdown from "../common/Dropdown";
 
 class PaymentsItem extends React.Component {
   state = {
-    monthSelected: "07/2018"
+    monthSelected: null
   };
 
-  // static getDerivedStateFromProps(props) {
-  //   if (!props.latestMonth.loading) {
-  //     return { monthSelected: props.latestMonth.getLatestMonth };
-  //   }
-  //   return null;
-  // }
-
-  getDropdownItems = () => {
+  getMonthsAvailable = () => {
     const { getAvailableMonths } = this.props;
 
-    console.log(getAvailableMonths);
     if (!getAvailableMonths.loading) {
       const months = getAvailableMonths.getAvailableMonths.map(month => {
         return {
@@ -61,19 +53,23 @@ class PaymentsItem extends React.Component {
       },
       getPayInKittyStatementsByMonth: {
         getPayInKittyStatementsByMonth: paymentsMade
-      }
+      },
+      getAvailableMonths
     } = this.props;
-    // console.log(this.getDropdownItems());
 
     if (!paymentsMade || !paymentsDue) <div>Loading...</div>;
     return (
       <div className="p-2 container">
         <div>
           <div className="p-2">
-            <h1>{this.state.monthSelected}</h1>
+            <h1>
+              {this.state.monthSelected ||
+                (getAvailableMonths.getAvailableMonths &&
+                  getAvailableMonths.getAvailableMonths[0])}
+            </h1>
             <Select
-              options={this.getDropdownItems()}
-              // onClick={monthSelected => this.filterState(monthSelected)}
+              options={this.getMonthsAvailable()}
+              onChange={monthSelected => this.filterState(monthSelected.value)}
               // header="Change month..."
               // className="mb-2"
             />
@@ -150,11 +146,12 @@ class PaymentsItem extends React.Component {
                             )}
                           </div>
                         </div>
-                        <PaymentOwnerDropdown
+                        <PaymentMenus
                           payment={payment}
                           housemateId={housemate && housemate.id}
                           month={this.state.monthSelected}
                           paymentsDue={getPaymentsDueFromHousematesForMonth}
+                          months={this.getMonthsAvailable()}
                         />
                       </div>
                     );

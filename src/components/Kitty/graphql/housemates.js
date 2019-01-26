@@ -29,8 +29,8 @@ export const getPaymentsDueFromHousematesForMonth = gql`
 `;
 
 export const updateMonthsPaid = gql`
-  mutation updateMonthsPaid($owner: Int!, $monthsPaid: String!) {
-    updateMonthsPaid(owner: $owner, monthsPaid: $monthsPaid) {
+  mutation updateMonthsPaid($housemateId: Int!, $monthsPaid: [String]!) {
+    updateMonthsPaid(housemateId: $housemateId, monthsPaid: $monthsPaid) {
       ok
     }
   }

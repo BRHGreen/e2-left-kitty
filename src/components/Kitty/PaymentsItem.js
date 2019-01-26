@@ -2,7 +2,7 @@ import React from "react";
 import { compose, graphql } from "react-apollo";
 import { getPayInKittyStatementsByMonth } from "./graphql/kittyStatements";
 import { getPaymentsDueFromHousematesForMonth } from "./graphql/housemates";
-import PaymentOwnerDropdown from "./PaymentOwnerDropdown";
+import PaymentOwnerDropdown from "./PaymentMenus";
 
 const PaymentsItem = props => {
   const {

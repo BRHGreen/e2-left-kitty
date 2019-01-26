@@ -95,6 +95,7 @@ export const getPayInKittyStatementsByMonth = gql`
         lastName
       }
       assignee {
+        id
         firstName
       }
     }
