@@ -1,9 +1,11 @@
 import React from "react";
 import { compose, graphql } from "react-apollo";
+import Select from "react-select";
 import {
   getMonthsFromKittyStatements,
   getPayInKittyStatementsByMonth,
-  getLatestMonth
+  getLatestMonth,
+  getAvailableMonths
 } from "./graphql/kittyStatements";
 import { getPaymentsDueFromHousematesForMonth } from "./graphql/housemates";
 import PaymentOwnerDropdown from "./PaymentOwnerDropdown";
@@ -23,19 +25,18 @@ class PaymentsItem extends React.Component {
   // }
 
   getDropdownItems = () => {
-    const { getMonthsFromKittyStatements: months } = this.props;
-    const availableMonths = [];
-    console.log(months);
-    if (!months.loading) {
-      months.getAllKittyStatements.map(statement => {
-        if (!availableMonths.includes(statement.month)) {
-          availableMonths.push(statement.month);
-        }
-        return null;
+    const { getAvailableMonths } = this.props;
+
+    console.log(getAvailableMonths);
+    if (!getAvailableMonths.loading) {
+      const months = getAvailableMonths.getAvailableMonths.map(month => {
+        return {
+          label: month,
+          value: month
+        };
       });
-      return availableMonths;
+      return months;
     }
-    return null;
   };
 
   filterState = monthSelected => {
@@ -62,6 +63,7 @@ class PaymentsItem extends React.Component {
         getPayInKittyStatementsByMonth: paymentsMade
       }
     } = this.props;
+    // console.log(this.getDropdownItems());
 
     if (!paymentsMade || !paymentsDue) <div>Loading...</div>;
     return (
@@ -69,11 +71,11 @@ class PaymentsItem extends React.Component {
         <div>
           <div className="p-2">
             <h1>{this.state.monthSelected}</h1>
-            <Dropdown
-              menuItems={this.getDropdownItems()}
-              onClick={monthSelected => this.filterState(monthSelected)}
-              header="Change month..."
-              className="mb-2"
+            <Select
+              options={this.getDropdownItems()}
+              // onClick={monthSelected => this.filterState(monthSelected)}
+              // header="Change month..."
+              // className="mb-2"
             />
           </div>
           <div className="columns">
@@ -182,5 +184,8 @@ export default compose(
   }),
   graphql(getLatestMonth, {
     name: "latestMonth"
+  }),
+  graphql(getAvailableMonths, {
+    name: "getAvailableMonths"
   })
 )(PaymentsItem);

@@ -5,6 +5,11 @@ export const getLatestMonth = gql`
     getLatestMonth
   }
 `;
+export const getAvailableMonths = gql`
+  query getAvailableMonths {
+    getAvailableMonths
+  }
+`;
 export const getAllKittyStatements = gql`
   query getAllKittyStatements {
     getAllKittyStatements {

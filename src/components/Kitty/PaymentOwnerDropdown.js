@@ -51,7 +51,7 @@ const KittyOwnerDropdown = props => {
       .then(() => paymentsMade.refetch())
       .catch(err => console.log("err", err));
   };
-  console.log(payment);
+
   return (
     !housemateById.loading && (
       <Dropdown
